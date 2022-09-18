@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Profile = () => {
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/mypost", {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("jwt"),
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //     });
+  // }, []);
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div
