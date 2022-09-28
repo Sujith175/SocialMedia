@@ -8,6 +8,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import CreatePost from "./Screens/CreatePost";
 import { useEffect, createContext, useReducer } from "react";
 import { reducer, initialState } from "./reducers/userreducer";
+import Cart from "./Screens/cart/Cart";
 export const UserContext = createContext();
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="login" element={<Login />} />
             <Route path="newpost" element={<CreatePost />} />
+            <Route path="cart" element={<Cart />} />
           </Route>
         </Routes>
       </UserContext.Provider>

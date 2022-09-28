@@ -3,7 +3,6 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 const Navbar = () => {
   const { state, dispatch } = useContext(UserContext);
-  console.log(state);
   const navigate = useNavigate();
   const renderList = () => {
     if (state) {

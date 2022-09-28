@@ -21,10 +21,12 @@ mongoose.connection.on("error", (err) => {
 
 require("./Models/User");
 require("./Models/post");
+require("./Models/products");
 
 app.use(express.json());
 app.use(require("./Routes/auth"));
 app.use(require("./Routes/post"));
+app.use(require("./Routes/Product"));
 
 //xZpLlWFMHKn3QB44
 

@@ -35,7 +35,7 @@ router.get("/allposts", requireLogin, (req, res) => {
   Post.find()
 
     .populate("postedBy", "_id name")
-
+    .populate("comments.postedBy", "_id name")
     .then((posts) => {
       res.json({ posts });
     })
@@ -98,14 +98,17 @@ router.put("/comment", requireLogin, (req, res) => {
     {
       $push: { comments: comment },
     },
-    { new: true } //we always need updated record if we dont give this mongo db will return old record
-  ).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      res.status(200).json(result);
-    }
-  });
+    { new: true }
+  ) //we always need updated record if we dont give this mongo db will return old record
+    .populate("comments.postedBy", "_id name") //need to get the name of the user from postId
+    .populate("postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.status(200).json(result);
+      }
+    });
 });
 
 module.exports = router;
