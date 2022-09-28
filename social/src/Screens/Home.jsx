@@ -99,13 +99,47 @@ const Home = () => {
         console.log(err);
       });
   };
-
+  const deletePost = (postId) => {
+    fetch(`/deletepost/${postId}`, {
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        // console.log(result);
+        const newData = data.filter((item) => {
+          return item._id !== result._id;
+        });
+        setData(newData);
+      });
+  };
   return (
     <div className="home">
       {data.map((item) => {
         return (
           <div key={item._id} className="card home-card">
-            <h5 style={{ marginLeft: "2%" }}>{item.postedBy.name}</h5>
+            <h5 style={{ marginLeft: "2%" }}>
+              {item.postedBy.name}
+              {item.postedBy._id == state._id && (
+                <i
+                  class="material-icons"
+                  style={{
+                    float: "right",
+                    cursor: "pointer",
+                    color: "red",
+                    padding: "10px",
+                  }}
+                  onClick={() => {
+                    deletePost(item._id);
+                  }}
+                >
+                  delete
+                </i>
+              )}
+            </h5>
+
             <div className="card-image">
               <img alt="" src={item.photo} />
             </div>
