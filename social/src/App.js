@@ -9,6 +9,7 @@ import CreatePost from "./Screens/CreatePost";
 import { useEffect, createContext, useReducer } from "react";
 import { reducer, initialState } from "./reducers/userreducer";
 import Cart from "./Screens/cart/Cart";
+import UserProfile from "./Screens/UserProfile";
 export const UserContext = createContext();
 
 const App = () => {
@@ -30,10 +31,11 @@ const App = () => {
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="profile" element={<Profile />} />
+            <Route exact path="profile" element={<Profile />} />
             <Route path="login" element={<Login />} />
             <Route path="newpost" element={<CreatePost />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="profile/:userid" element={<UserProfile />} />
           </Route>
         </Routes>
       </UserContext.Provider>
