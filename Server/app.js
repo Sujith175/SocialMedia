@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(require("./Routes/auth"));
 app.use(require("./Routes/post"));
 app.use(require("./Routes/Product"));
-
+app.use(require("./Routes/user"));
 //xZpLlWFMHKn3QB44
 
 app.listen(PORT, () => {
