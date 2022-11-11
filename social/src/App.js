@@ -10,6 +10,7 @@ import { useEffect, createContext, useReducer } from "react";
 import { reducer, initialState } from "./reducers/userreducer";
 import Cart from "./Screens/cart/Cart";
 import UserProfile from "./Screens/UserProfile";
+import SubscribedUserPost from "./Screens/SubscribedUserPost";
 export const UserContext = createContext();
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
             <Route exact path="profile" element={<Profile />} />
             <Route path="login" element={<Login />} />
             <Route path="newpost" element={<CreatePost />} />
+            <Route path="myfollowingposts" element={<SubscribedUserPost />} />
             <Route path="cart" element={<Cart />} />
             <Route path="profile/:userid" element={<UserProfile />} />
           </Route>
