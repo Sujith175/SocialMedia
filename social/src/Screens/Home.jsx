@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../App";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -121,10 +122,18 @@ const Home = () => {
         return (
           <div key={item._id} className="card home-card">
             <h5 style={{ marginLeft: "2%" }}>
-              {item.postedBy.name}
+              <Link
+                to={
+                  item.postedBy._id !== state._id
+                    ? "/profile/" + item.postedBy._id
+                    : "/profile"
+                }
+              >
+                {item.postedBy.name}
+              </Link>
               {item.postedBy._id == state._id && (
                 <i
-                  class="material-icons"
+                  className="material-icons"
                   style={{
                     float: "right",
                     cursor: "pointer",
