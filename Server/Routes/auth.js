@@ -5,9 +5,19 @@ const bcrypt = require("bcryptjs");
 const User = mongoose.model("User");
 const jwt = require("jsonwebtoken");
 const requireLogin = require("../Middleware/requireLogin");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
 
 const { JWT_SECRET } = require("../keys");
 
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 router.get("/", (req, res) => {
   res.send("hello");
 });
@@ -36,6 +46,12 @@ router.post("/signup", (req, res) => {
         user
           .save()
           .then((user) => {
+            transporter.sendMail({
+              to: user.email,
+              from: "anandhust@gmail.com",
+              subject: "SuccessFully Signed Up",
+              html: "<h1>Welcome to Our world</h1>",
+            });
             res.json({ message: "Signed Up Successfully" });
           })
           .catch((err) => {

@@ -29,12 +29,18 @@ const Profile = () => {
         .then((res) => res.json())
         .then((data) => {
           setUrl(data.url);
-          console.log(data);
           localStorage.setItem(
             "user",
             JSON.stringify({ ...state, pic: data.url })
           );
           dispatch({ type: "UPDATEPIC", payload: data.url });
+          fetch("http://localhost:3000/updatepic", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+          });
           window.location.reload();
         })
         .catch((err) => {
