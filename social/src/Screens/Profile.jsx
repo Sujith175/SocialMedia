@@ -3,7 +3,8 @@ import { UserContext } from "../App";
 const Profile = () => {
   const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
-
+  const [url, setUrl] = useState("");
+  const [image, setImage] = useState("");
   useEffect(() => {
     fetch("http://localhost:8000/mypost", {
       headers: {
@@ -15,6 +16,35 @@ const Profile = () => {
         setPics(result.mypost);
       });
   }, []);
+  useEffect(() => {
+    if (image) {
+      const data = new FormData(); //to upload file need to create form data
+      data.append("file", image);
+      data.append("upload_preset", "instaClone");
+      data.append("cloud_name", "sujith101");
+      fetch("https://api.cloudinary.com/v1_1/sujith101/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUrl(data.url);
+          console.log(data);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...state, pic: data.url })
+          );
+          dispatch({ type: "UPDATEPIC", payload: data.url });
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [image]);
+  const updatePhoto = (file) => {
+    setImage(file);
+  };
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div
@@ -31,7 +61,21 @@ const Profile = () => {
             src={state ? state.pic : "Loading"}
             alt="none"
           />
+
+          <div style={{ padding: "10px" }} className="file-field input-field">
+            <div className="btn" style={{ borderRadius: "20px" }}>
+              <span>Update Picture</span>
+              <input
+                type="file"
+                onChange={(e) => updatePhoto(e.target.files[0])}
+              />
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" />
+            </div>
+          </div>
         </div>
+
         <div>
           <h4>{state ? state.name : "loading"}</h4>
           <h5>{state ? state.email : "loading"}</h5>
